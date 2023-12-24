@@ -4,10 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "start": "node index.js",
-    "dev": "tsc --watch",
-    "lint": "eslint --ext .js,.ts"
+    "gateway": "nodemon --watch gateway --ext ts,json --exec 'ts-node gateway/index.ts'"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +21,7 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.5.0",
     "eslint-plugin-promise": "^6.1.1",
+    "nodemon": "^3.0.2",
     "prettier": "^3.1.1",
     "typescript": "^5.3.3"
   }
