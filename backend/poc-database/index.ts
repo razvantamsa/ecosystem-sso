@@ -1,12 +1,17 @@
 import fastify from 'fastify';
+import endpointsPlugin from './endpoints';
+
+const PORT = Number(process.env.PORT) || 4000;
 
 const server = fastify();
 
 server.get('/ping', async () => {
-  return 'pong\n';
+  return { message: 'pong' };
 });
 
-server.listen({ port: 8080 }, (err, address) => {
+server.register(endpointsPlugin);
+
+server.listen({ port: PORT }, (err, address) => {
   if (err) {
     console.error(err);
     process.exit(1);
