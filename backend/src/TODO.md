@@ -1,5 +1,5 @@
 sql db
 redis db
-endpoints
+~~~endpoints~~~
 migrations
 interface - optional
