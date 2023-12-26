@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  gateway:
+    container_name: ecosystem_sso_gateway
+    build:
+      context: .
+      dockerfile: gateway.Dockerfile
+    ports:
+      - '4000:4000'
+    volumes:
+      - .:/usr/src
+    network_mode: host
