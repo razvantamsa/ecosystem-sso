@@ -11,3 +11,21 @@ services:
     volumes:
       - .:/usr/src
     network_mode: host
+    depends_on:
+      - sqldb
+
+  sqldb:
+    image: postgres:latest
+    container_name: ecosystem_sso_postgresql
+    environment:
+      POSTGRES_DB: ecosystem_db
+      POSTGRES_USER: ecosystem_user
+      POSTGRES_PASSWORD: my_password
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+    driver: local
