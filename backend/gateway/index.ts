@@ -1,5 +1,6 @@
 import fastify from 'fastify';
 import endpointsPlugin from './endpoints';
+import '../db/setup';
 
 const HOST = process.env.HOST || '127.0.0.1';
 const PORT = Number(process.env.PORT) || 4000;
