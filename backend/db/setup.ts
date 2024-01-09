@@ -31,8 +31,10 @@ async function connectToDB() {
     }
 
     await connectToDB();
+
+    global.sqlconnected = true;
   } catch (error) {
     console.error(error);
-    global.sqlclient = undefined;
+    global.sqlconnected = false;
   }
 })();
