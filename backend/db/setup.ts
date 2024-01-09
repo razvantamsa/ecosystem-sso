@@ -1,37 +1,20 @@
-import { Client } from 'pg';
+import { PrismaClient } from '@prisma/client';
 
-const sqlclient = new Client({
-  user: process.env.DB_USER_SQL,
-  host: process.env.DB_HOST_SQL,
-  database: process.env.DB_NAME_SQL,
-  password: process.env.DB_PASSWORD_SQL,
-  port: Number(process.env.DB_PORT_SQL)
-});
+async function checkDatabaseConnection() {
+  const sqlclient = new PrismaClient();
 
-async function connectToDB() {
   try {
-    await sqlclient.connect();
-    console.log('Connected to PostgreSQL');
+    await sqlclient.$connect();
     global.sqlclient = sqlclient;
+    console.log('Connected to the database.');
   } catch (error) {
-    throw new Error(`Error connecting to PostgreSQL: ${error}`);
+    console.error('Error connecting to the database:', error);
   }
 }
 
 (async () => {
   try {
-    if (
-      !process.env.DB_USER_SQL ||
-      !process.env.DB_HOST_SQL ||
-      !process.env.DB_NAME_SQL ||
-      !process.env.DB_PASSWORD_SQL ||
-      !process.env.DB_PORT_SQL
-    ) {
-      throw new Error('PostgreSQL connection configuration missing attributes');
-    }
-
-    await connectToDB();
-
+    await checkDatabaseConnection();
     global.sqlconnected = true;
   } catch (error) {
     console.error(error);
