@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "gateway": "nodemon --watch gateway --ext ts,json --exec 'ts-node gateway/index.ts'"
+    "gateway": "nodemon --watch gateway --watch db --ext 'ts,json' --exec 'ts-node gateway/index.ts'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "fastify": "^4.25.1",
-    "pg": "^8.11.3"
+    "pg": "^8.11.3",
+    "prisma": "^5.7.1"
   },
   "devDependencies": {
     "@types/node": "^20.10.5",
