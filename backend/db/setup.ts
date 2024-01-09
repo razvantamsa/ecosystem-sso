@@ -8,12 +8,31 @@ const sqlclient = new Client({
   port: Number(process.env.DB_PORT_SQL)
 });
 
-sqlclient
-  .connect()
-  .then(() => {
+async function connectToDB() {
+  try {
+    await sqlclient.connect();
     console.log('Connected to PostgreSQL');
     global.sqlclient = sqlclient;
-  })
-  .catch((error: any) =>
-    console.error('Error connecting to PostgreSQL', error)
-  );
+  } catch (error) {
+    throw new Error(`Error connecting to PostgreSQL: ${error}`);
+  }
+}
+
+(async () => {
+  try {
+    if (
+      !process.env.DB_USER_SQL ||
+      !process.env.DB_HOST_SQL ||
+      !process.env.DB_NAME_SQL ||
+      !process.env.DB_PASSWORD_SQL ||
+      !process.env.DB_PORT_SQL
+    ) {
+      throw new Error('PostgreSQL connection configuration missing attributes');
+    }
+
+    await connectToDB();
+  } catch (error) {
+    console.error(error);
+    global.sqlclient = undefined;
+  }
+})();
