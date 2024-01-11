@@ -20,7 +20,7 @@ async function getOneUser(userId: string) {
   try {
     return global.sqlclient.user.findUnique({
       where: {
-        id: Number(userId)
+        id: userId
       }
     });
   } catch (error) {
@@ -53,7 +53,7 @@ async function deleteOneUser(userId: string) {
   try {
     return global.sqlclient.user.delete({
       where: {
-        id: Number(userId)
+        id: userId
       }
     });
   } catch (error) {
@@ -68,7 +68,7 @@ async function updateOneUser(userId: string, name: string) {
 
   try {
     return global.sqlclient.user.update({
-      where: { id: Number(userId) },
+      where: { id: userId },
       data: {
         name
       }
