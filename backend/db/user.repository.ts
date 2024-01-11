@@ -61,11 +61,29 @@ async function deleteOneUser(userId: string) {
   }
 }
 
+async function updateOneUser(userId: string, name: string) {
+  if (!global.sqlconnected || !(global.sqlclient instanceof PrismaClient)) {
+    throw new Error('Cannot connect to the database');
+  }
+
+  try {
+    return global.sqlclient.user.update({
+      where: { id: Number(userId) },
+      data: {
+        name
+      }
+    });
+  } catch (error) {
+    throw new Error(error as any as string);
+  }
+}
+
 const UserRepository = {
   getAllUsers,
   getOneUser,
   createOneUser,
-  deleteOneUser
+  deleteOneUser,
+  updateOneUser
 };
 
 export default UserRepository;
