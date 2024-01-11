@@ -3,7 +3,7 @@ import { RouteOptions } from 'fastify';
 
 async function getAll() {
   try {
-    const users = await UserRepository.getUsers();
+    const users = await UserRepository.getAllUsers();
     return { users };
   } catch (error) {
     throw new Error(error as any as string);

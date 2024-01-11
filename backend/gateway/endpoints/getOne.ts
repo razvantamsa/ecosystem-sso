@@ -1,8 +1,14 @@
+import UserRepository from '../../db/user.repository';
 import { FastifyRequest, RouteOptions } from 'fastify';
 
 async function getOne(request: FastifyRequest) {
-  const { id } = request.params as { id: string };
-  return { message: `getting user ${id}` };
+  try {
+    const { id } = request.params as { id: string };
+    const user = await UserRepository.getOneUser(id);
+    return { user };
+  } catch (error) {
+    throw new Error(error as any as string);
+  }
 }
 
 const routeOptions: RouteOptions = {
