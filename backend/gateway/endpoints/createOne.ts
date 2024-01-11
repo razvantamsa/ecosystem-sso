@@ -1,7 +1,14 @@
-import { RouteOptions } from 'fastify';
+import UserRepository from '../../db/user.repository';
+import { FastifyRequest, RouteOptions } from 'fastify';
 
-async function createOne() {
-  return { message: 'creating user' };
+async function createOne(request: FastifyRequest) {
+  try {
+    const { name, email } = request.body as any;
+    const user = await UserRepository.createOneUser(name, email);
+    return { user };
+  } catch (error) {
+    throw new Error(error as any as string);
+  }
 }
 
 const routeOptions: RouteOptions = {

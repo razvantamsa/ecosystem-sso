@@ -10,4 +10,24 @@ services:
       - '4000:4000'
     volumes:
       - .:/usr/src
+    env_file:
+      - .env
     network_mode: host
+    depends_on:
+      - sqldb
+
+  sqldb:
+    image: postgres:latest
+    container_name: ecosystem_sso_postgresql
+    environment:
+      POSTGRES_DB: ${DB_NAME_SQL}
+      POSTGRES_USER: ${DB_USER_SQL}
+      POSTGRES_PASSWORD: ${DB_PASSWORD_SQL}
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+    driver: local

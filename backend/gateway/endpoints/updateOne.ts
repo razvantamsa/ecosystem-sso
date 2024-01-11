@@ -1,8 +1,15 @@
+import UserRepository from '../../db/user.repository';
 import { FastifyRequest, RouteOptions } from 'fastify';
 
 async function updateOne(request: FastifyRequest) {
-  const { id } = request.params as { id: string };
-  return { message: `update user ${id}` };
+  try {
+    const { id } = request.params as any;
+    const { name } = request.body as any;
+    const user = await UserRepository.updateOneUser(id, name);
+    return { user };
+  } catch (error) {
+    throw new Error(error as any as string);
+  }
 }
 
 const routeOptions: RouteOptions = {

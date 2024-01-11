@@ -4,16 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "gateway": "nodemon --watch gateway --ext ts,json --exec 'ts-node gateway/index.ts'"
+    "gateway": "nodemon --watch gateway --watch db --ext 'ts,json' --exec 'ts-node gateway/index.ts'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^4.25.1"
+    "@prisma/client": "^5.7.1",
+    "fastify": "^4.25.1",
+    "pg": "^8.11.3"
   },
   "devDependencies": {
     "@types/node": "^20.10.5",
+    "@types/pg": "^8.10.9",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "eslint": "^8.56.0",

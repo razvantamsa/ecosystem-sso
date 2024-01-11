@@ -1,7 +1,13 @@
+import UserRepository from '../../db/user.repository';
 import { RouteOptions } from 'fastify';
 
 async function getAll() {
-  return { message: 'getting users' };
+  try {
+    const users = await UserRepository.getAllUsers();
+    return { users };
+  } catch (error) {
+    throw new Error(error as any as string);
+  }
 }
 
 const routeOptions: RouteOptions = {
@@ -11,15 +17,3 @@ const routeOptions: RouteOptions = {
 };
 
 export default routeOptions;
-
-// async function endpointsPlugin(fastify: FastifyInstance, options: any) {
-//   const routeOptions: RouteOptions = {
-//     method: 'GET',
-//     url: '/users',
-//     handler: getAll
-//   };
-
-//   fastify.route(routeOptions);
-// }
-
-// export default endpointsPlugin;
