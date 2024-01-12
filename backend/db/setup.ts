@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import Logger from '../common/logger';
 import Redis from 'ioredis';
 
 const redisConfig = {
@@ -16,7 +17,7 @@ function checkCacheConnection() {
     global.cacheclient = redis;
 
     redis.on('connect', () => {
-      console.log('Connected to the cache.');
+      Logger.info('Connected to the cache.');
       retryAttempts = 0;
       global.cacheconnected = true;
     });
@@ -25,16 +26,16 @@ function checkCacheConnection() {
       retryAttempts += 1;
       global.cacheconnected = false;
 
-      console.error('Redis connection error:', err.message);
+      Logger.error(`Redis connection error: ${err.message}`);
 
       if (retryAttempts < maxRetries) {
-        console.log(`Retrying to connect to cache attempt: ${retryAttempts}`);
+        Logger.info(`Retrying to connect to cache attempt: ${retryAttempts}`);
       } else if (retryAttempts === maxRetries) {
-        console.error(`Max retries reached: ${maxRetries}`);
+        Logger.error(`Max retries reached: ${maxRetries}`);
       }
     });
   } catch (error) {
-    console.error('Error connecting to the cache:', error);
+    Logger.error(`Error connecting to the cache: ${error}`);
   }
 }
 
@@ -44,9 +45,9 @@ async function checkDatabaseConnection() {
   try {
     await sqlclient.$connect();
     global.sqlclient = sqlclient;
-    console.log('Connected to the database.');
+    Logger.info('Connected to the database.');
   } catch (error) {
-    console.error('Error connecting to the database:', error);
+    Logger.error(`Error connecting to the database: ${error}`);
   }
 }
 
@@ -57,7 +58,7 @@ async function checkDatabaseConnection() {
 
     checkCacheConnection();
   } catch (error) {
-    console.error(error);
+    Logger.error(error as any as string);
     global.sqlconnected = false;
   }
 })();
