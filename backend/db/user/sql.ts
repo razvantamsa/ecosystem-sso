@@ -73,7 +73,7 @@ async function updateOneUserDB(userId: string, name: string) {
   }
 }
 
-const UserRepository = {
+const UserServiceDB = {
   getAllUsersDB,
   getOneUserDB,
   createOneUserDB,
@@ -81,4 +81,4 @@ const UserRepository = {
   updateOneUserDB
 };
 
-export default UserRepository;
+export default UserServiceDB;
