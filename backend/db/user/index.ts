@@ -1,5 +1,5 @@
-import UserServiceDB from './sql';
-import UserServiceCache from './cache';
+import UserServiceDB from './user.service';
+import UserServiceCache from './user.cache';
 
 async function getAllUsers() {
   return UserServiceDB.getAllUsersDB();
