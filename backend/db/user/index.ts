@@ -9,9 +9,9 @@ async function getAllUsers() {
 async function getOneUser(userId: string) {
   const cacheKey = UserCache.userCacheKey(userId);
 
-  const userData: any = CacheService.get(cacheKey);
+  const userData: any = await CacheService.get(cacheKey);
   if (userData) {
-    return userData;
+    return { id: userId, ...JSON.parse(userData) };
   }
 
   return UserServiceDB.getOneUserDB(userId);
