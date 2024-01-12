@@ -1,4 +1,4 @@
-import UserRepository from '../../db/user.repository';
+import UserRepository from '../../db/user';
 import { RouteOptions } from 'fastify';
 
 async function getAll() {
