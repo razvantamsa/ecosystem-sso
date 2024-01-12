@@ -18,5 +18,6 @@ server.listen({ host: HOST, port: PORT }, (err) => {
     console.error(err);
     process.exit(1);
   }
+
   console.log(`Server listening at http://${HOST}:${PORT}`);
 });
