@@ -13,14 +13,17 @@ function checkCacheConnection() {
 
   try {
     const redis = new Redis(redisConfig);
+    global.cacheclient = redis;
 
     redis.on('connect', () => {
       console.log('Connected to the cache.');
       retryAttempts = 0;
+      global.cacheconnected = true;
     });
 
     redis.on('error', async (err) => {
       retryAttempts += 1;
+      global.cacheconnected = false;
 
       console.error('Redis connection error:', err.message);
 
