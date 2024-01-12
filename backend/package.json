@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "gateway": "nodemon --watch gateway --watch db --ext 'ts,json' --exec 'ts-node gateway/index.ts'"
+    "gateway": "nodemon --watch . --ext 'ts,json' --exec 'ts-node gateway/index.ts'"
   },
   "keywords": [],
   "author": "",
