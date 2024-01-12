@@ -7,7 +7,7 @@ const redisConfig = {
   password: process.env.DB_PASSWORD_REDIS
 };
 
-async function checkCacheConnection() {
+function checkCacheConnection() {
   const maxRetries = 5;
   let retryAttempts = 0;
 
@@ -15,7 +15,7 @@ async function checkCacheConnection() {
     const redis = new Redis(redisConfig);
 
     redis.on('connect', () => {
-      console.log('Connected to the cache');
+      console.log('Connected to the cache.');
       retryAttempts = 0;
     });
 
@@ -52,7 +52,7 @@ async function checkDatabaseConnection() {
     await checkDatabaseConnection();
     global.sqlconnected = true;
 
-    await checkCacheConnection();
+    checkCacheConnection();
   } catch (error) {
     console.error(error);
     global.sqlconnected = false;
