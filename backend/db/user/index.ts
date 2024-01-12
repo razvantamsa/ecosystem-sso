@@ -1,24 +1,60 @@
 import UserServiceDB from './user.service';
-import UserServiceCache from './user.cache';
+import UserCache from './user.cache';
+import CacheService from '../cache.service';
 
 async function getAllUsers() {
   return UserServiceDB.getAllUsersDB();
 }
 
 async function getOneUser(userId: string) {
+  const cacheKey = UserCache.userCacheKey(userId);
+
+  const userData: any = CacheService.get(cacheKey);
+  if (userData) {
+    return userData;
+  }
+
   return UserServiceDB.getOneUserDB(userId);
 }
 
 async function createOneUser(name: string, email: string) {
-  return UserServiceDB.createOneUserDB(name, email);
+  const result = await UserServiceDB.createOneUserDB(name, email);
+
+  if (result) {
+    const cacheKey = UserCache.userCacheKey(result.id);
+
+    await CacheService.set(cacheKey, {
+      name,
+      email
+    });
+  }
+
+  return result;
 }
 
 async function deleteOneUser(userId: string) {
-  return UserServiceDB.deleteOneUserDB(userId);
+  const result = await UserServiceDB.deleteOneUserDB(userId);
+
+  if (result) {
+    const cacheKey = UserCache.userCacheKey(result.id);
+    await CacheService.del(cacheKey);
+  }
+
+  return result;
 }
 
 async function updateOneUser(userId: string, name: string) {
-  return updateOneUser(userId, name);
+  const result = await UserServiceDB.updateOneUserDB(userId, name);
+
+  if (result) {
+    const cacheKey = UserCache.userCacheKey(userId);
+    await CacheService.set(cacheKey, {
+      name: result.name,
+      email: result.email
+    });
+  }
+
+  return result;
 }
 
 const UserRepository = {

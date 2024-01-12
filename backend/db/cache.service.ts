@@ -33,10 +33,10 @@ async function del(cacheKey: string) {
   }
 }
 
-const UserServiceCache = {
+const CacheService = {
   set,
   get,
   del
 };
 
-export default UserServiceCache;
+export default CacheService;
